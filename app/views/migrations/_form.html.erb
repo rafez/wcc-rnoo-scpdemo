@@ -1,0 +1,28 @@
+<%= form_for(@migration) do |f| %>
+<h1>Rafez is here</h1>
+
+  <% if @migration.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@migration.errors.count, "error") %> prohibited this migration from being saved:</h2>
+
+      <ul>
+      <% @migration.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :add_sitename_to_sites %><br />
+    <%= f.text_field :add_sitename_to_sites %>
+  </div>
+  <div class="field">
+    <%= f.label :sitename %><br />
+    <%= f.text_field :sitename %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

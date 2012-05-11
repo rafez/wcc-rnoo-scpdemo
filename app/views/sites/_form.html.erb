@@ -1,0 +1,35 @@
+<% disableFlag ||= false %>
+<%= form_for(@site) do |f| %>
+  <% if @site.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@site.errors.count, "error") %> prohibited this site from being saved:</h2>
+
+      <ul>
+      <% @site.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= semantic_form_for @site do |f| %>
+<!--
+    <%= f.inputs %>
+    <%= f.actions %>
+-->    
+		<%= f.inputs do %>
+			<%= f.input :username,:label => "Username", :required=>true, :input_html => { :disabled=>disableFlag } %>
+			<%= f.input :password, :input_html => { :disabled =>disableFlag }  %>
+			<%= f.input :sitename, :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :add_privatekeypw_to_sites, :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :privatekeypw, :as=> :password, :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :privatekey, :as=>:text, :input_html => { :disabled=>disableFlag, :class => 'autogrow', :rows => 10, :cols => 80 } %>
+			<%= f.input :localfilepath, :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :remotefilepath, :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :frequency,  :as => :radio,       :collection => ["1", "2", "4", "6","8","12","18","24","48","72","144"] %>
+		<% end %>
+    <%= f.actions do %>
+      <%= f.action :submit, :as => :button, :input_html => { :readonly =>disableFlag }   %>
+    <% end %>
+	<% end %>
+<% end %>

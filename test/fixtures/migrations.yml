@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  add_sitename_to_sites: MyString
+  sitename: MyString
+
+two:
+  add_sitename_to_sites: MyString
+  sitename: MyString

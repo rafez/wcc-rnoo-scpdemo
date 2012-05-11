@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Add sitename to sites:</b>
+  <%= @migration.add_sitename_to_sites %>
+</p>
+
+<p>
+  <b>Sitename:</b>
+  <%= @migration.sitename %>
+</p>
+
+
+<%= link_to 'Edit', edit_migration_path(@migration) %> |
+<%= link_to 'Back', migrations_path %>

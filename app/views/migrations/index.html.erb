@@ -1,0 +1,25 @@
+<h1>Listing migrations</h1>
+
+<table>
+  <tr>
+    <th>Add sitename to sites</th>
+    <th>Sitename</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @migrations.each do |migration| %>
+  <tr>
+    <td><%= migration.add_sitename_to_sites %></td>
+    <td><%= migration.sitename %></td>
+    <td><%= link_to 'Show', migration %></td>
+    <td><%= link_to 'Edit', edit_migration_path(migration) %></td>
+    <td><%= link_to 'Destroy', migration, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Migration', new_migration_path %>
