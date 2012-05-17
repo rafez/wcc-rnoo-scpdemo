@@ -10,6 +10,8 @@
  *
  *= require_self
  *= require_tree .
+ *= require _scpstyles 
  *= require formtastic
  *= require formtastic_changes
 */
+

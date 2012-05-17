@@ -1,0 +1,31 @@
+@import 'globalvariables.css.scss';
+
+@mixin drop-shadow{
+  text-shadow: black 1px 1px 0px;
+}
+
+h1  {
+  background-color:$wcc-green ;
+  border-bottom: 1px solid black;
+  padding: 20px 0px;
+  border: 1px green solid;
+  margin-bottom: 0em;
+  margin-top: 0em;
+  font: bold 30px arial;
+  color: white;
+  @include drop-shadow;
+  
+}
+table{
+  display: table;
+}
+
+th{
+  background-color: $dark-grey;
+  color: white;
+  font: 700 13px/24px sans-serif;
+}
+
+td{
+  padding: 5px;
+}
