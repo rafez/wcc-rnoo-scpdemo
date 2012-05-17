@@ -1,5 +1,6 @@
 require 'net/ssh'
 require 'net/scp'
+require 'rufus/scheduler'
 #require 'rufus/scheduler'
 
 
@@ -139,6 +140,17 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
     end
   end
 
+  def schedule
+    @site = Site.find(params[:id])
+
+    scheduler = Rufus::Scheduler.start_new
+
+    scheduler.every '10s' do
+      puts "rufus scheduler schedule loaded"
+#      :notice => 'Successfully scheduled'  
+    end
+  end
+  
   # POST /sites
   # POST /sites.json
   def create

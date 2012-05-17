@@ -18,15 +18,17 @@
     <%= f.actions %>
 -->    
 		<%= f.inputs do %>
+			<%= f.input :name,:label => "Name", :required=>true, :input_html => { :disabled=>disableFlag } %>
 			<%= f.input :username,:label => "Username", :required=>true, :input_html => { :disabled=>disableFlag } %>
 			<%= f.input :password, :input_html => { :disabled =>disableFlag }  %>
-			<%= f.input :sitename, :input_html => { :disabled=>disableFlag }  %>
-			<%= f.input :add_privatekeypw_to_sites, :input_html => { :disabled=>disableFlag }  %>
-			<%= f.input :privatekeypw, :as=> :password, :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :sitename, :label => "Remote Server",:input_html => { :disabled=>disableFlag }  %>
+<!--			<%= f.input :add_privatekeypw_to_sites, :input_html => { :disabled=>disableFlag }  %> -->
+			<%= f.input :description, :as=>:text, :required=>true, :input_html => { :disabled=>disableFlag, :class => 'autogrow', :rows => 2, :cols => 30  } %>
+			<%= f.input :privatekeypw, :as => :password, :input_html => { :disabled=>disableFlag, :value => @site.privatekeypw }  %>
 			<%= f.input :privatekey, :as=>:text, :input_html => { :disabled=>disableFlag, :class => 'autogrow', :rows => 10, :cols => 80 } %>
 			<%= f.input :localfilepath, :input_html => { :disabled=>disableFlag }  %>
 			<%= f.input :remotefilepath, :input_html => { :disabled=>disableFlag }  %>
-			<%= f.input :frequency,  :as => :radio,       :collection => ["1", "2", "4", "6","8","12","18","24","48","72","144"] %>
+			<%= f.input :frequency, :label => "Connect every (hours)" , :as => :radio,       :collection => ["1", "2", "4", "6","8","12","18","24","48","72","144"] %><%= f.input :scheduleenabled, :label => " enabled", :input_html => { :disabled=>disableFlag }  %>
 		<% end %>
     <%= f.actions do %>
       <%= f.action :submit, :as => :button, :input_html => { :readonly =>disableFlag }   %>

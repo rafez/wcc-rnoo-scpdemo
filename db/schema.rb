@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120501163146) do
+ActiveRecord::Schema.define(:version => 20120515143558) do
 
   create_table "migrations", :force => true do |t|
     t.string   "add_sitename_to_sites"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(:version => 20120501163146) do
     t.string   "remotefilepath"
     t.string   "localfilepath"
     t.integer  "frequency"
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "scheduleenabled"
   end
 
 end

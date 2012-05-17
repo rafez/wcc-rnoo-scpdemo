@@ -1,12 +1,27 @@
 @CHARSET "ISO-8859-1";
+@import 'globalvariables.css.scss';
+
 /* RADIO OVERRIDES - display radio buttons in line
 --------------------------------------------------------------------------------------------------*/
-form.formtastic fieldset > ol > li.radio fieldset ol li {
+form {
+  fieldset > ol > li.radio fieldset ol li {
     margin:0.1em 0.5em 0.5em 0;
     display: inline-block;
+  }
+  .label {
+    float: left;
+    width: 140px;
+    border: 1px green solid;
+    background: green;
+    font: 1em arial bold italic;
+   /* color: $wcc-green; */
+    color: white;
+    padding: 1px;
+  }
+  background-color: $scp-light-green;  
 }
+
 
 ol, ul, li {
   list-style: none;
-  list-
 }
