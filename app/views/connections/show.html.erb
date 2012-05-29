@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @connection.name %>
+</p>
+
+<p>
+  <b>Servername:</b>
+  <%= @connection.servername %>
+</p>
+
+<p>
+  <b>Ipaddress:</b>
+  <%= @connection.ipaddress %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @connection.description %>
+</p>
+
+<p>
+  <b>Privatekeypw:</b>
+  <%= @connection.privatekeypw %>
+</p>
+
+<p>
+  <b>Privatekey:</b>
+  <%= @connection.privatekey %>
+</p>
+
+
+<%= link_to 'Edit', edit_connection_path(@connection) %> |
+<%= link_to 'Back', connections_path %>

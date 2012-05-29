@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120515143558) do
+ActiveRecord::Schema.define(:version => 20120528160832) do
+
+  create_table "connections", :force => true do |t|
+    t.string   "name"
+    t.string   "servername"
+    t.string   "ipaddress"
+    t.text     "description"
+    t.string   "privatekeypw"
+    t.text     "privatekey"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "migrations", :force => true do |t|
     t.string   "add_sitename_to_sites"

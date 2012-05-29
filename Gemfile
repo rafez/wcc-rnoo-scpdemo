@@ -12,6 +12,18 @@ gem 'sqlite3'
 gem 'formtastic'
 
 gem  'rufus-scheduler'
+#gem  'ruby-debug-ide'
+
+#gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+#gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+#gem 'ruby-debug19'
+
+#gem  'ruby-debug19'
+#gem  'ruby-debug19',:require => 'ruby-debug'
+#gem  'ruby-debug-base19',:require => 'ruby-debug-base'
+#gem  'ruby-debug-base19','~> 0.11.30.pre4'
+#gem  'ruby-debug-ide19',:require => 'ruby-debug-ide'
+#gem  'rdebug-ide'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

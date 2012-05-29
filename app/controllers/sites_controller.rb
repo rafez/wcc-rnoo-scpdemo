@@ -94,7 +94,8 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
   # GET /sites/new
   # GET /sites/new.json
   def new
-    @site = Site.new
+    @site = Site.new 
+    #2.times do @site.connections.build end
 
     respond_to do |format|
       format.html # new.html.erb

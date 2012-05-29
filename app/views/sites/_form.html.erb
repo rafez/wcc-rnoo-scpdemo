@@ -18,6 +18,12 @@
     <%= f.actions %>
 -->    
 		<%= f.inputs do %>
+			<%= f.inputs :for => :connections do |j| %>
+				<%= j.input :name, :label=>"Name" %>
+			<% end %>
+		<% end %>
+
+		<%= f.inputs do %>
 			<%= f.input :name,:label => "Name", :required=>true, :input_html => { :disabled=>disableFlag } %>
 			<%= f.input :username,:label => "Username", :required=>true, :input_html => { :disabled=>disableFlag } %>
 			<%= f.input :password, :input_html => { :disabled =>disableFlag }  %>
@@ -33,5 +39,4 @@
     <%= f.actions do %>
       <%= f.action :submit, :as => :button, :input_html => { :readonly =>disableFlag }   %>
     <% end %>
-	<% end %>
 <% end %>

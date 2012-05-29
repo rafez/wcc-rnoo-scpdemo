@@ -1,0 +1,14 @@
+<%= semantic_form_for @connection do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :servername %>
+    <%= f.input :ipaddress %>
+    <%= f.input :description %>
+    <%= f.input :privatekeypw %>
+    <%= f.input :privatekey %>
+  <% end %>
+
+  <%= f.actions do %>
+    <%= f.action :submit, :as => :input %>
+  <% end %>
+<% end %>

@@ -1,5 +1,7 @@
 ScpDemo::Application.routes.draw do
   
+  resources :connections
+
   resources :migrations
 
   root :to => "sites#index"
