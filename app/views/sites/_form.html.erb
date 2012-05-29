@@ -18,6 +18,9 @@
     <%= f.actions %>
 -->    
 		<%= f.inputs do %>
+			<%= f.inputs :for => :connections do |j| %>
+				<%= j.input :name, :label=>"Name" %>
+			<% end %>
 
 			<%= f.input :name,:label => "Name", :required=>true, :input_html => { :disabled=>disableFlag } %>
 			<%= f.input :username,:label => "Username", :required=>true, :input_html => { :disabled=>disableFlag } %>
