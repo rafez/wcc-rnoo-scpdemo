@@ -1,6 +1,7 @@
 require 'net/ssh'
 require 'net/scp'
 require 'rufus/scheduler'
+require 'tempfile'
 #require 'rufus/scheduler'
 
 
@@ -226,12 +227,17 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
     :key_data => [@site.dest_privatekey],
     :passphrase => @site.dest_privatekeypw,
     :keys_only => true) do |ssh2|
-
-    # upload from an in-memory buffer
-      #@io1 = IO.new( 3 , "w" ).puts( @data )
-      
-      ssh2.scp.upload! @data,  "/001.txt"
+    fOut = Tempfile.new( 'scp') {|f| f.write( data ) }
+    ssh2.scp.upload! fOut,  "/001.txt"
+    fOut.unlink
+    
+ 
+ 
       #ssh2.scp.upload! StringIO.new("some data to upload"), "/001.txt"
+=begin
+      #puts data
+      File.open( "/maven-tmp.txt", 'w') {|f| f.write( data ) }
+=end
     end
   end
 
