@@ -95,7 +95,7 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
   # GET /sites/new.json
   def new
     @site = Site.new 
-    #2.times do @site.connections.build end
+    #2.times { @site.connections.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -121,25 +121,123 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
     #keyPrivate = Net::SSH::KeyFactory.load_data_private_key( @site.privatekey, @site.privatekeypw, "" )
      
     Net::SSH.start(
-    @site.sitename,
-    @site.username,
-    :key_data => [@site.privatekey],
-    :passphrase => @site.privatekeypw,
+    @site.src_sitename,
+    @site.src_username,
+    :key_data => [@site.src_privatekey],
+    :passphrase => @site.src_privatekeypw,
     :keys_only => true) do |ssh|
       
       # This line works to transfer a file
       # ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
       #data = ssh.scp.download! "/home/rafez/maven-repos.txt"
-      data = ssh.scp.download! @site.remotefilepath
+        data = ssh.scp.download! @site.src_filepath
+    end
 
-      #puts data
-      if File.open( @site.localfilepath, 'w') {|f| f.write( data ) }
-        redirect_to @site, notice: 'File successfully downloaded from: '+@site.sitename+':'+@site.remotefilepath+
-        '==>'+@site.localfilepath
-      end
-      
+    Net::SSH.start(
+    @site.dest_sitename,
+    @site.dest_username,
+    :key_data => [@site.dest_privatekey],
+    :passphrase => @site.dest_privatekeypw,
+    :keys_only => true) do |ssh2|
+
+    # upload from an in-memory buffer
+      ssh2.scp.upload! StringIO.new( data, @site.dest_filepath )
     end
   end
+  
+  def connect_test_src
+    @site = Site.find(params[:id])
+
+    Net::SSH.start(
+    @site.src_sitename,
+    @site.src_username,
+    :key_data => [@site.src_privatekey],
+    :passphrase => @site.src_privatekeypw,
+    :keys_only => true) do |ssh|
+      
+      respond_to do |format|
+        if output = ssh.exec!("hostname")
+          format.html { redirect_to @site, notice: "Source server tested correctly. "+output }
+        else
+          format.html { redirect_to @site, notice: "FAILED: Couldn't connect to Source server."+output }
+        end
+      end
+  end
+  end
+
+  def connect_test_dest
+    @site = Site.find(params[:id])
+
+    Net::SSH.start(
+    @site.dest_sitename,
+    @site.dest_username,
+    :key_data => [@site.dest_privatekey],
+    :passphrase => @site.dest_privatekeypw,
+    :keys_only => true) do |ssh|
+      
+      respond_to do |format|
+        if output = ssh.exec!("hostname")
+          format.html { redirect_to @site, notice: "Source server tested correctly. "+output }
+        else
+          format.html { redirect_to @site, notice: "FAILED: Couldn't connect to Source server."+output }
+        end
+      end
+  end
+  end
+
+
+=begin
+      #puts data
+      if File.open( @site.dest_filepath, 'w') {|f| f.write( data ) }
+        redirect_to @site, notice: 'File successfully downloaded from: '+@site.src_sitename+':'+@site.src_filepath+
+        '==>'+@site.dest_filepath
+      end
+    end
+=end      
+
+  def transfer
+    @site = Site.find(params[:id])
+
+   # This works - RNOO - 2012-03-12 17:07
+    #Net::SSH.start( "wvtcent2", "rafez", :password => "password" ) do |ssh|
+    #ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
+    #end
+
+    # This works - RNOO - 2012-03-12 17:07
+    #keyPublic = Net::SSH::KeyFactory.load_data_public_key( "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIB+/Oo/MjYK9fJo1LTUyhytusSuOcj3/pGw5BDZHt8SnOaUJ6R4xr0GbNnRG8BFIlYzL0PBcSP91Tau1me4Zo02Ae64wC3hWgO//VIhB4USdD114FlSO4xhtwoX08cM2qHSjleVCv36C7uIRWPqJjQDWYCGI46rmMObIdFJNsW9gw== rsa-key-20090526", "" )
+    #keyPrivate = Net::SSH::KeyFactory.load_data_private_key( @site.privatekey, @site.privatekeypw, "" )
+     
+    Net::SSH.start(
+    @site.src_sitename,
+    @site.src_username,
+    :key_data => [@site.src_privatekey],
+    :passphrase => @site.src_privatekeypw,
+    :keys_only => true) do |ssh|
+      
+      # This line works to transfer a file
+      # ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
+      #data = ssh.scp.download! "/home/rafez/maven-repos.txt"
+        @data = ssh.scp.download! @site.src_filepath
+    end
+
+    Net::SSH.start(
+    @site.dest_sitename,
+    @site.dest_username,
+    :key_data => [@site.dest_privatekey],
+    :passphrase => @site.dest_privatekeypw,
+    :keys_only => true) do |ssh2|
+
+    # upload from an in-memory buffer
+      #@io1 = IO.new( 3 , "w" ).puts( @data )
+      
+      ssh2.scp.upload! @data,  "/001.txt"
+      #ssh2.scp.upload! StringIO.new("some data to upload"), "/001.txt"
+    end
+  end
+
+
+
+
 
   def schedule
     @site = Site.find(params[:id])

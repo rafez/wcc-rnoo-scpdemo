@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120528160832) do
+ActiveRecord::Schema.define(:version => 20120607111510) do
 
   create_table "connections", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120528160832) do
     t.text     "privatekey"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "site_id"
   end
 
   create_table "migrations", :force => true do |t|
@@ -32,20 +33,27 @@ ActiveRecord::Schema.define(:version => 20120528160832) do
   end
 
   create_table "sites", :force => true do |t|
-    t.string   "username"
+    t.string   "src_username"
     t.string   "password"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.string   "sitename"
-    t.string   "privatekey"
+    t.string   "src_sitename"
+    t.string   "src_privatekey"
     t.string   "add_privatekeypw_to_sites"
-    t.string   "privatekeypw"
+    t.string   "src_privatekeypw"
     t.string   "remotefilepath"
-    t.string   "localfilepath"
+    t.string   "src_filepath"
     t.integer  "frequency"
     t.string   "name"
-    t.string   "description"
+    t.string   "src_description"
     t.boolean  "scheduleenabled"
+    t.string   "dest_username"
+    t.string   "dest_sitename"
+    t.string   "dest_description"
+    t.string   "dest_privatekeypw"
+    t.string   "dest_privatekey"
+    t.string   "dest_filepath"
+    t.string   "task_description"
   end
 
 end

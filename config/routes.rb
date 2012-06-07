@@ -8,8 +8,10 @@ ScpDemo::Application.routes.draw do
   resources :sites
   
   match 'sites/:id/connect' => 'sites#connect', :as=> 'connect_site'
-  
+  match 'sites/:id/connect_test_src' => 'sites#connect_test_src', :as=> 'connect_test_src'
+  match 'sites/:id/connect_test_dest' => 'sites#connect_test_dest', :as=> 'connect_test_dest'
   match 'sites/:id/schedule' => 'sites#schedule', :as=> 'schedule_site'
+  match 'sites/:id/transfer' => 'sites#transfer', :as=> 'transfer_site'
 
   #resources 
   # The priority is based upon order of creation:

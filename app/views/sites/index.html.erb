@@ -4,7 +4,8 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
-    <th>Server</th>
+    <th>Src Server</th>
+    <th>Dest Server</th>
     <th>Login Name</th>
     <th>actions</th>
   </tr>
@@ -12,9 +13,10 @@
 <% @sites.each do |site| %>
   <tr>
     <td><%= link_to site.name, site %></td>
-    <td><%= site.description %></td>
-    <td><%= site.sitename %></td>
-    <td><%= site.username %></td>
+    <td><%= site.task_description %></td>
+    <td><%= site.src_sitename %></td>
+    <td><%= site.dest_sitename %></td>
+    <td><%= site.src_username %></td>
     <td>
     	<%= link_to 'Show', site %>
     	<%= link_to 'Edit', edit_site_path(site) %>
