@@ -4,6 +4,8 @@ gem 'rails', '3.2.1'
 
 gem 'net-ssh', '~> 2.3.0'
 gem 'net-scp', '~> 1.0.4'
+gem 'net-sftp', '~> 2.0.5'
+gem "iobuffer", "~> 1.1.2"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,6 +15,15 @@ gem 'formtastic'
 
 gem  'rufus-scheduler'
 #gem  'ruby-debug-ide'
+
+#  Active Admin start
+    # Gemfile
+gem 'activeadmin'
+  # Gemfile in Rails >= 3.1
+gem 'activeadmin'
+# gem 'sass-rails'
+gem "meta_search",    '>= 1.1.0.pre'
+# Active Admin close
 
 #gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
 #gem 'ruby-debug-base19x', '~> 0.11.30.pre4'

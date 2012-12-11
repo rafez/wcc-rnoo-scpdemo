@@ -1,17 +1,24 @@
 ScpDemo::Application.routes.draw do
   
-  resources :connections
+  ActiveAdmin.routes(self)
 
-  resources :migrations
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  resources :sites, :connections, :migrations
+
 
   root :to => "sites#index"
-  resources :sites
+
+#  match 'sites/connect_test_src' => 'sites#connect_test_src', :as => "connect_test_src"
+#  match 'sites/connect_test_dest' => 'sites#connect_test_dest', :as => "connect_test_dest"
+#  match 'sites/schedule' => 'sites#schedule', :as => "schedule_site"
+#  match 'sites/transfer' => 'sites#transfer', :as => "transfer_site"
   
-  match 'sites/:id/connect' => 'sites#connect', :as=> 'connect_site'
-  match 'sites/:id/connect_test_src' => 'sites#connect_test_src', :as=> 'connect_test_src'
-  match 'sites/:id/connect_test_dest' => 'sites#connect_test_dest', :as=> 'connect_test_dest'
-  match 'sites/:id/schedule' => 'sites#schedule', :as=> 'schedule_site'
-  match 'sites/:id/transfer' => 'sites#transfer', :as=> 'transfer_site'
+#  match 'sites/:id/connect' => 'sites#connect', :as=> "connect_site"
+#  match 'sites/:id/connect_test_src' => 'sites#connect_test_src', :as => "connect_test_src"
+#  match 'sites/:id/connect_test_dest' => 'sites#connect_test_dest', :as => "connect_test_dest"
+#  match 'sites/:id/schedule' => 'sites#schedule', :as => "schedule_site"
+#  match 'sites/:id/transfer' => 'sites#transfer', :as => "transfer_site"
 
   #resources 
   # The priority is based upon order of creation:

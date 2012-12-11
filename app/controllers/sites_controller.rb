@@ -1,8 +1,7 @@
 require 'net/ssh'
 require 'net/scp'
+require 'net/sftp'
 require 'rufus/scheduler'
-require 'tempfile'
-#require 'rufus/scheduler'
 
 
 class SitesController < ApplicationController
@@ -28,74 +27,13 @@ class SitesController < ApplicationController
       format.json { render json: @site }
       
     end
-
-=begin    
-    # This works - RNOO - 2012-03-12 17:07
-    #Net::SSH.start( "wvtcent2", "rafez", :password => "password" ) do |ssh|
-    #ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
-    #end
-
-    # This works - RNOO - 2012-03-12 17:07
-    keyPublic = Net::SSH::KeyFactory.load_data_public_key( "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIB+/Oo/MjYK9fJo1LTUyhytusSuOcj3/pGw5BDZHt8SnOaUJ6R4xr0GbNnRG8BFIlYzL0PBcSP91Tau1me4Zo02Ae64wC3hWgO//VIhB4USdD114FlSO4xhtwoX08cM2qHSjleVCv36C7uIRWPqJjQDWYCGI46rmMObIdFJNsW9gw== rsa-key-20090526", "" )
-    keyPrivate = Net::SSH::KeyFactory.load_data_private_key( 
-"-----BEGIN RSA PRIVATE KEY-----
-Proc-Type: 4,ENCRYPTED
-DEK-Info: DES-EDE3-CBC,880C2C2175C41173
-
-Qqk7WpAbEIabzqGCNGQcpYrYGhyfXAIfGSlLQyzSSjiQG/JLbMCvrNmVN8M9hZM4
-J8HodwtPUlrKeU9fMQqeiXiEJ0TOkrt5+GPvFy+ZhuLR2zLa5pFgyP+jrxF50D8a
-A6bm9WrrC48YKQx8Jur/0eKJHJDNz7E+7ehPZTbUHFJaz+BdK5W4/GMh3exIkaD1
-giezq8x88/l7YKaxjP/VGLIkGSRiIKj1BBDPeZ2uXD67qZ9lVW0Bs+CxLoB3ThZs
-b1J67io2jPMgJAJP4LLruoReXmIIuUNbCY6ZzRk14+2WHObcYyhiSCLvuapsaR5s
-SnnwErrKrKGLH4gvsRRc8/8p5RDzVw1Q1y92t+9oufhV42OhtispA48uh9wM7myI
-8FkhzR8WthoTbk6G+YmIX7RjGC+Sdet6Caf+ywctCjkbqLqeoLkYh6HcfBzlcOcu
-i82I3CO1yZ2xzjE94DcvdCG2PAEiorWQz+VoC+82ka+KlsmzPEsZbHPbZ9/Dwq6g
-aKBvmZgfLDWu1mOWLbVBQ9hXPVPoRO65aggmfkOvlJMmdXIoV9RayZS18TfVOt0F
-IjXgRfnULoHuRPvDf44HWU27OUO/7lrgqM8V1xD3iPNwWcfmr6BR3vCGSI9mVnuh
-reinjdhnfDGALQJ+JK67olTdcEc492bTMt9E2H5ixqMFFwdQav7WQqWCvs/Nm2lv
-BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
-66k/bGY8UrOp/7dAi3CLZxlE3SE3wllWkk3rwGd0gzw=
------END RSA PRIVATE KEY-----", "gazelleisgood","" )       
-    
-     
-    Net::SSH.start(
-    "wvtcent2", "rafez",
-    :key_data => [
-      "-----BEGIN RSA PRIVATE KEY-----
-Proc-Type: 4,ENCRYPTED
-DEK-Info: DES-EDE3-CBC,880C2C2175C41173
-
-Qqk7WpAbEIabzqGCNGQcpYrYGhyfXAIfGSlLQyzSSjiQG/JLbMCvrNmVN8M9hZM4
-J8HodwtPUlrKeU9fMQqeiXiEJ0TOkrt5+GPvFy+ZhuLR2zLa5pFgyP+jrxF50D8a
-A6bm9WrrC48YKQx8Jur/0eKJHJDNz7E+7ehPZTbUHFJaz+BdK5W4/GMh3exIkaD1
-giezq8x88/l7YKaxjP/VGLIkGSRiIKj1BBDPeZ2uXD67qZ9lVW0Bs+CxLoB3ThZs
-b1J67io2jPMgJAJP4LLruoReXmIIuUNbCY6ZzRk14+2WHObcYyhiSCLvuapsaR5s
-SnnwErrKrKGLH4gvsRRc8/8p5RDzVw1Q1y92t+9oufhV42OhtispA48uh9wM7myI
-8FkhzR8WthoTbk6G+YmIX7RjGC+Sdet6Caf+ywctCjkbqLqeoLkYh6HcfBzlcOcu
-i82I3CO1yZ2xzjE94DcvdCG2PAEiorWQz+VoC+82ka+KlsmzPEsZbHPbZ9/Dwq6g
-aKBvmZgfLDWu1mOWLbVBQ9hXPVPoRO65aggmfkOvlJMmdXIoV9RayZS18TfVOt0F
-IjXgRfnULoHuRPvDf44HWU27OUO/7lrgqM8V1xD3iPNwWcfmr6BR3vCGSI9mVnuh
-reinjdhnfDGALQJ+JK67olTdcEc492bTMt9E2H5ixqMFFwdQav7WQqWCvs/Nm2lv
-BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
-66k/bGY8UrOp/7dAi3CLZxlE3SE3wllWkk3rwGd0gzw=
------END RSA PRIVATE KEY-----"
-    ], 
-    :keys_only => true ) do |ssh|
-      # This line works to transfer a file
-      # ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
-      data = ssh.scp.download! "/home/rafez/maven-repos.txt"
-      
-      #puts data
-      File.open( "/maven-tmp.txt", 'w') {|f| f.write( data ) }
-    end
-=end
-
   end
 
   # GET /sites/new
   # GET /sites/new.json
   def new
     @site = Site.new 
+    puts "Got here"
     #2.times { @site.connections.build }
 
     respond_to do |format|
@@ -112,26 +50,13 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
   def connect
     @site = Site.find(params[:id])
 
-   # This works - RNOO - 2012-03-12 17:07
-    #Net::SSH.start( "wvtcent2", "rafez", :password => "password" ) do |ssh|
-    #ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
-    #end
-
-    # This works - RNOO - 2012-03-12 17:07
-    #keyPublic = Net::SSH::KeyFactory.load_data_public_key( "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIB+/Oo/MjYK9fJo1LTUyhytusSuOcj3/pGw5BDZHt8SnOaUJ6R4xr0GbNnRG8BFIlYzL0PBcSP91Tau1me4Zo02Ae64wC3hWgO//VIhB4USdD114FlSO4xhtwoX08cM2qHSjleVCv36C7uIRWPqJjQDWYCGI46rmMObIdFJNsW9gw== rsa-key-20090526", "" )
-    #keyPrivate = Net::SSH::KeyFactory.load_data_private_key( @site.privatekey, @site.privatekeypw, "" )
-     
-    Net::SSH.start(
+     Net::SSH.start(
     @site.src_sitename,
     @site.src_username,
     :key_data => [@site.src_privatekey],
     :passphrase => @site.src_privatekeypw,
     :keys_only => true) do |ssh|
-      
-      # This line works to transfer a file
-      # ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
-      #data = ssh.scp.download! "/home/rafez/maven-repos.txt"
-        data = ssh.scp.download! @site.src_filepath
+       data = ssh.scp.download! @site.src_filepath
     end
 
     Net::SSH.start(
@@ -142,13 +67,14 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
     :keys_only => true) do |ssh2|
 
     # upload from an in-memory buffer
-      ssh2.scp.upload! StringIO.new( data, @site.dest_filepath )
+      #ssh2.scp.upload! StringIO.new( @data, @site.dest_filepath )
+      ssh2.sftp.upload! StringIO.new( @data, @site.dest_filepath )
     end
   end
-  
-  def connect_test_src
-    @site = Site.find(params[:id])
 
+  def connect_test_src
+    #@site = Site.new
+    @site = Site.find(params[:id])
     Net::SSH.start(
     @site.src_sitename,
     @site.src_username,
@@ -168,7 +94,7 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
 
   def connect_test_dest
     @site = Site.find(params[:id])
-
+  
     Net::SSH.start(
     @site.dest_sitename,
     @site.dest_username,
@@ -178,7 +104,7 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
       
       respond_to do |format|
         if output = ssh.exec!("hostname")
-          format.html { redirect_to @site, notice: "Source server tested correctly. "+output }
+          format.html { redirect_to @site, notice: "Destination server tested correctly. "+output }
         else
           format.html { redirect_to @site, notice: "FAILED: Couldn't connect to Source server."+output }
         end
@@ -187,64 +113,35 @@ BO3Ndafk3sFiL723fcDtbDEO6/7EEoMSxY9GqcqHBJF5BC1qRHQhZOdRWjr/pSe3
   end
 
 
-=begin
-      #puts data
-      if File.open( @site.dest_filepath, 'w') {|f| f.write( data ) }
-        redirect_to @site, notice: 'File successfully downloaded from: '+@site.src_sitename+':'+@site.src_filepath+
-        '==>'+@site.dest_filepath
-      end
-    end
-=end      
-
   def transfer
     @site = Site.find(params[:id])
 
-   # This works - RNOO - 2012-03-12 17:07
-    #Net::SSH.start( "wvtcent2", "rafez", :password => "password" ) do |ssh|
-    #ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
-    #end
-
-    # This works - RNOO - 2012-03-12 17:07
-    #keyPublic = Net::SSH::KeyFactory.load_data_public_key( "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIB+/Oo/MjYK9fJo1LTUyhytusSuOcj3/pGw5BDZHt8SnOaUJ6R4xr0GbNnRG8BFIlYzL0PBcSP91Tau1me4Zo02Ae64wC3hWgO//VIhB4USdD114FlSO4xhtwoX08cM2qHSjleVCv36C7uIRWPqJjQDWYCGI46rmMObIdFJNsW9gw== rsa-key-20090526", "" )
-    #keyPrivate = Net::SSH::KeyFactory.load_data_private_key( @site.privatekey, @site.privatekeypw, "" )
-     
     Net::SSH.start(
     @site.src_sitename,
     @site.src_username,
     :key_data => [@site.src_privatekey],
     :passphrase => @site.src_privatekeypw,
     :keys_only => true) do |ssh|
-      
-      # This line works to transfer a file
-      # ssh.scp.download! "/home/rafez/maven-repos.txt", "/maven-repos.txt"
-      #data = ssh.scp.download! "/home/rafez/maven-repos.txt"
         @data = ssh.scp.download! @site.src_filepath
     end
-
+    puts "Downloaded data"
     Net::SSH.start(
-    @site.dest_sitename,
-    @site.dest_username,
-    :key_data => [@site.dest_privatekey],
-    :passphrase => @site.dest_privatekeypw,
-    :keys_only => true) do |ssh2|
-    fOut = Tempfile.new( 'scp') {|f| f.write( data ) }
-    ssh2.scp.upload! fOut,  "/001.txt"
-    fOut.unlink
-    
- 
- 
-      #ssh2.scp.upload! StringIO.new("some data to upload"), "/001.txt"
-=begin
-      #puts data
-      File.open( "/maven-tmp.txt", 'w') {|f| f.write( data ) }
-=end
+      @site.dest_sitename,
+      @site.dest_username,
+      :key_data => [@site.dest_privatekey],
+      :passphrase => @site.dest_privatekeypw,
+      :keys_only => true) do |ssh2|
+          respond_to do |format|
+            if output = ( ssh2.sftp.upload! StringIO.new( @data ), @site.dest_filepath )
+              format.html { redirect_to @site, notice: "Successfully transferred " + @site.dest_filepath + " to " + @site.dest_sitename }
+             else
+              format.html { redirect_to @site, notice: "FAILED: Couldn't transfer file "+ @site.dest_filepath + " to " + @site.dest_sitename }
+            end
+          end
+        puts "Finished downloading data"
+      end
     end
-  end
-
-
-
-
-
+    
   def schedule
     @site = Site.find(params[:id])
 

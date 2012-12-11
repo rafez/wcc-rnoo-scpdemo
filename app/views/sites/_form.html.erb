@@ -24,7 +24,8 @@
 		<%= f.inputs do %>
 
 			<%= f.input :name,:label => "Name", :required=>true, :input_html => { :disabled=>disableFlag } %>
-			<%= f.input :frequency, :label => "Connect every (hours)" , :as => :radio,       :collection => ["1", "2", "4", "6","8","12","18","24","48","72","144"] %><%= f.input :scheduleenabled, :label => " enabled", :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :frequency, :label => "Connect every (hours)" , :as => :radio,       :collection => ["1", "2", "4", "6","8","12","18","24","48","72","144"], :input_html => { :disabled=>disableFlag }  %>
+			<%= f.input :scheduleenabled, :label => " enabled", :input_html => { :disabled=>disableFlag }  %>
 			<%= f.input :task_description, :label => "Describe this task", :as=>:text, :required=>true, :input_html => { :disabled=>disableFlag, :class => 'autogrow', :rows => 2, :cols => 30  } %>
 			
 			<h3>Source Server</h3>
@@ -36,7 +37,7 @@
 			<%= f.input :src_privatekeypw, :as => :password, :input_html => { :disabled=>disableFlag, :value => @site.src_privatekeypw }  %>
 			<%= f.input :src_privatekey, :as=>:text, :input_html => { :disabled=>disableFlag, :class => 'autogrow', :rows => 10, :cols => 80 } %>
 			<%= f.input :src_filepath, :input_html => { :disabled=>disableFlag }  %>
-			<%= link_to "Test Connection", connect_test_src_path(@site) %>
+			<%= link_to "Test Connection", connect_test_src_path( @site) %>
 
 			<h3>Destination Server</h3>
 			<%= f.input :dest_sitename, :label => "Remote Server",:input_html => { :disabled=>disableFlag }  %>
@@ -47,12 +48,13 @@
 			<%= f.input :dest_privatekeypw, :as => :password, :input_html => { :disabled=>disableFlag, :value => @site.dest_privatekeypw }  %>
 			<%= f.input :dest_privatekey, :as=>:text, :input_html => { :disabled=>disableFlag, :class => 'autogrow', :rows => 10, :cols => 80 } %>
 			<%= f.input :dest_filepath, :input_html => { :disabled=>disableFlag }  %>
-			<%= link_to "Test Connection", connect_test_dest_path(@site) %>
+			<%= link_to "Test Connection", connect_test_dest_path( @site) %>
 
 <!--		    <%= f.inputs :name, :username, :for => :connections, :name => "rnoo1" %> -->
 		<% end %>
     <%= f.actions do %>
-      <%= f.action :submit, :as => :button, :input_html => { :readonly =>disableFlag }   %>
+		<%= f.action :submit, :label => "Save", :as => :button, :button_html => { :disable_with => 'Wait...', :disabled=>disableFlag }   %>
+		<%= f.action :cancel, :as => :link %>
     <% end %>
 <% end %>
 <% end %>
